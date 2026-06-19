@@ -1,7 +1,6 @@
 from flask import Flask
 
-from flask_appbuilder.extensions import db
-from .extensions import appbuilder
+from .extensions import appbuilder, db
 
 
 def create_app() -> Flask:

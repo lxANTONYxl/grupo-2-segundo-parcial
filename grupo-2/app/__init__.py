@@ -54,4 +54,20 @@ def create_app() -> Flask:
             DetallePedidoView, "Detalle de Pedidos",
             icon="fa-list", category="Ventas"
         )
+        
+        _crear_roles(appbuilder)
+        
     return app
+
+
+def _crear_roles(appbuilder):
+    """Crea los roles Admin, Supervisor y Usuario si no existen."""
+    from flask_appbuilder.security.sqla.models import Role
+
+    roles_necesarios = ["Admin", "Supervisor", "Usuario"]
+    roles_existentes = [r.name for r in appbuilder.sm.get_all_roles()]
+
+    for nombre in roles_necesarios:
+        if nombre not in roles_existentes:
+            appbuilder.sm.add_role(nombre)
+            

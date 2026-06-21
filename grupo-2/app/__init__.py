@@ -41,4 +41,17 @@ def create_app() -> Flask:
             icon="fa-laptop", category="Catálogo"
         )
         
+        
+        appbuilder.add_view(
+            ClienteView, "Clientes",
+            icon="fa-users", category="Ventas"
+        )
+        appbuilder.add_view(
+            PedidoView, "Pedidos",
+            icon="fa-shopping-cart", category="Ventas"
+        )
+        appbuilder.add_view(
+            DetallePedidoView, "Detalle de Pedidos",
+            icon="fa-list", category="Ventas"
+        )
     return app

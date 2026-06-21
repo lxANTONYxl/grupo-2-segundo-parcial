@@ -20,4 +20,12 @@ def create_app() -> Flask:
         from app.models.detalle_pedido import DetallePedido
         
         db.create_all()
+        
+        from app.views.categoria_view import CategoriaView
+        from app.views.marca_view import MarcaView
+        from app.views.laptop_view import LaptopView
+        from app.views.cliente_view import ClienteView
+        from app.views.pedido_view import PedidoView
+        from app.views.detalle_pedido_view import DetallePedidoView
+        
     return app

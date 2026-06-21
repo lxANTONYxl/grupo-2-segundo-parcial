@@ -28,4 +28,17 @@ def create_app() -> Flask:
         from app.views.pedido_view import PedidoView
         from app.views.detalle_pedido_view import DetallePedidoView
         
+        appbuilder.add_view(
+            CategoriaView, "Categorías",
+            icon="fa-tags", category="Catálogo"
+        )
+        appbuilder.add_view(
+            MarcaView, "Marcas",
+            icon="fa-trademark", category="Catálogo"
+        )
+        appbuilder.add_view(
+            LaptopView, "Laptops",
+            icon="fa-laptop", category="Catálogo"
+        )
+        
     return app

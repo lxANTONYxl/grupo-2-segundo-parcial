@@ -27,6 +27,7 @@ def create_app() -> Flask:
         from app.views.cliente_view import ClienteView
         from app.views.pedido_view import PedidoView
         from app.views.detalle_pedido_view import DetallePedidoView
+        from app.views.reportes.reporte_laptops import ReporteLaptopsView
         
         appbuilder.add_view(
             CategoriaView, "Categorías",
@@ -54,6 +55,13 @@ def create_app() -> Flask:
             DetallePedidoView, "Detalle de Pedidos",
             icon="fa-list", category="Ventas"
         )
+        
+        # ddsde aqui colocan sus menu de los reportes
+        appbuilder.add_view(
+            ReporteLaptopsView, "Laptops por Categoría",
+            icon="fa-chart-bar", category="Reportes"
+        )
+        
         
         _crear_roles(appbuilder)
         

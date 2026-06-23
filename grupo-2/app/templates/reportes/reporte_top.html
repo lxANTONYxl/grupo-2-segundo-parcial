@@ -103,4 +103,80 @@
 
 {% block tail_js %}
 {{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  // Gráfica 1: barras horizontales - top laptops
+  const ctxBarras = document.getElementById('graficaTopBarras').getContext('2d');
+  new Chart(ctxBarras, {
+    type: 'bar',
+    data: {
+      labels: {{ labels_top | safe }},
+      datasets: [{
+        label: 'Unidades vendidas',
+        data: {{ valores_top | safe }},
+        backgroundColor: '#4e73df',
+        borderColor: '#2e59d9',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Top laptops por unidades vendidas'
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
+        }
+      }
+    }
+  });
+
+  // Gráfica 2: línea - ingresos por mes
+  const ctxLinea = document.getElementById('graficaLinea').getContext('2d');
+  new Chart(ctxLinea, {
+    type: 'line',
+    data: {
+      labels: {{ labels_mes | safe }},
+      datasets: [{
+        label: 'Ingresos (Bs.)',
+        data: {{ valores_mes | safe }},
+        fill: true,
+        backgroundColor: 'rgba(28, 200, 138, 0.15)',
+        borderColor: '#1cc88a',
+        pointBackgroundColor: '#1cc88a',
+        pointRadius: 5,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Ingresos mensuales'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return 'Bs. ' + context.parsed.y.toFixed(2);
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
 {% endblock %}

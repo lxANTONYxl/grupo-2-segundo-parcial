@@ -71,6 +71,7 @@ def create_app() -> Flask:
             ReporteTopView, "Top Laptops Vendidas",
             icon="fa-chart-line", category="Reportes"
         )
+        
         _crear_roles(appbuilder)
         
     return app

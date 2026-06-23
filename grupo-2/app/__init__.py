@@ -28,6 +28,7 @@ def create_app() -> Flask:
         from app.views.pedido_view import PedidoView
         from app.views.detalle_pedido_view import DetallePedidoView
         from app.views.reportes.reporte_laptops import ReporteLaptopsView
+        from app.views.reportes.reporte_ventas import ReporteVentasView
         from app.views.reportes.reporte_top import ReporteTopView
         
         appbuilder.add_view(
@@ -43,7 +44,6 @@ def create_app() -> Flask:
             icon="fa-laptop", category="Catálogo"
         )
         
-        
         appbuilder.add_view(
             ClienteView, "Clientes",
             icon="fa-users", category="Ventas"
@@ -57,11 +57,16 @@ def create_app() -> Flask:
             icon="fa-list", category="Ventas"
         )
         
-        # ddsde aqui colocan sus menu de los reportes
         appbuilder.add_view(
             ReporteLaptopsView, "Laptops por Categoría",
             icon="fa-chart-bar", category="Reportes"
         )
+
+        appbuilder.add_view(
+            ReporteVentasView, "Ventas por Cliente",
+            icon="fa-chart-pie", category="Reportes"
+        )
+        
         appbuilder.add_view(
             ReporteTopView, "Top Laptops Vendidas",
             icon="fa-chart-line", category="Reportes"
@@ -73,7 +78,6 @@ def create_app() -> Flask:
 
 
 def _crear_roles(appbuilder):
-    """Crea los roles Admin, Supervisor y Usuario si no existen."""
     from flask_appbuilder.security.sqla.models import Role
 
     roles_necesarios = ["Admin", "Supervisor", "Usuario"]

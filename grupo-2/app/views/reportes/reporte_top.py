@@ -2,6 +2,14 @@ from flask_appbuilder import BaseView, expose
 from app.extensions import db
 from app.models.laptop import Laptop
 from app.models.detalle_pedido import DetallePedido
+from app.models.pedido import Pedido
+import json
+
+
+class ReporteTopView(BaseView):
+
+    @expose("/", methods=["GET"])
+    def list(self):
 import json
 
 class ReporteTopView(BaseView):
@@ -26,6 +34,9 @@ class ReporteTopView(BaseView):
             .limit(10)
             .all()
         )
+
+        labels_top = [f"{row[0].marca} {row[0].modelo}" for row in top_laptops]
+        valores_top = [int(row[1]) for row in top_laptops]
 
         # Labels y valores para gráfica de barras horizontal
         labels_top = [f"{row[0].marca} {row[0].modelo}" for row in top_laptops]

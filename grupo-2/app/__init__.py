@@ -28,6 +28,8 @@ def create_app() -> Flask:
         from app.views.pedido_view import PedidoView
         from app.views.detalle_pedido_view import DetallePedidoView
         from app.views.reportes.reporte_laptops import ReporteLaptopsView
+        from app.views.reportes.reporte_ventas import ReporteVentasView
+        from app.views.reportes.reporte_top import ReporteTopView
         
         appbuilder.add_view(
             CategoriaView, "Categorías",
@@ -75,7 +77,6 @@ def create_app() -> Flask:
 
 
 def _crear_roles(appbuilder):
-    """Crea los roles Admin, Supervisor y Usuario si no existen."""
     from flask_appbuilder.security.sqla.models import Role
 
     roles_necesarios = ["Admin", "Supervisor", "Usuario"]

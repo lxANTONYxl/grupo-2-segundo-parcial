@@ -12,11 +12,11 @@ class Pedido(db.Model):
     total = Column(Float, nullable=False, default=0.0)
     estado = Column(String(50), nullable=False, default="Pendiente")  # Pendiente, Pagado, Cancelado
 
-    # Relación con Cliente
+
     cliente_id = Column(Integer, ForeignKey("cliente.id"), nullable=False)
     cliente = relationship("Cliente", backref="pedidos")
 
-    # Relación con detalles
+
     detalles = relationship("DetallePedido", back_populates="pedido", cascade="all, delete-orphan")
 
     def __repr__(self):

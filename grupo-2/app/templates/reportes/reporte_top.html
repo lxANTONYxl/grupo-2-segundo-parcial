@@ -72,6 +72,32 @@
   </div>
 </div>
 
+<!-- Gráficas -->
+<div class="row">
+  <!-- Barras horizontal: top laptops -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-dark text-white">
+        <i class="fa fa-bar-chart"></i> Unidades vendidas por laptop
+      </div>
+      <div class="card-body">
+        <canvas id="graficaTopBarras"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Línea: ingresos por mes -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-dark text-white">
+        <i class="fa fa-line-chart"></i> Ingresos totales por mes (Bs.)
+      </div>
+      <div class="card-body">
+        <canvas id="graficaLinea"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
 

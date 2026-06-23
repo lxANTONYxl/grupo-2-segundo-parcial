@@ -28,6 +28,7 @@ def create_app() -> Flask:
         from app.views.pedido_view import PedidoView
         from app.views.detalle_pedido_view import DetallePedidoView
         from app.views.reportes.reporte_laptops import ReporteLaptopsView
+        from app.views.reportes.reporte_top import ReporteTopView
         
         appbuilder.add_view(
             CategoriaView, "Categorías",
@@ -61,7 +62,10 @@ def create_app() -> Flask:
             ReporteLaptopsView, "Laptops por Categoría",
             icon="fa-chart-bar", category="Reportes"
         )
-        
+        appbuilder.add_view(
+            ReporteTopView, "Top Laptops Vendidas",
+            icon="fa-chart-line", category="Reportes"
+        )
         
         _crear_roles(appbuilder)
         

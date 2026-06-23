@@ -1,0 +1,182 @@
+{% extends "reportes/base_reporte.html" %}
+
+{% block reporte_content %}
+
+<div class="row mb-4">
+  <div class="col-12">
+    <h3 class="mb-1">
+      <i class="fa fa-chart-line text-warning"></i>
+      Reporte: Top Laptops Más Vendidas
+    </h3>
+    <p class="text-muted">Ranking de laptops con mayor cantidad de unidades vendidas e ingresos por mes.</p>
+  </div>
+</div>
+
+<!-- Tabla top laptops -->
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-header bg-warning text-dark">
+        <i class="fa fa-trophy"></i> Top 10 laptops más vendidas
+      </div>
+      <div class="card-body p-0">
+        {% if top_laptops %}
+        <div class="table-responsive">
+          <table class="table table-striped table-hover mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Categoría</th>
+                <th class="text-center">Unidades vendidas</th>
+                <th class="text-end">Ingresos (Bs.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for laptop, total_vendido, total_ingresos in top_laptops %}
+              <tr>
+                <td>
+                  {% if loop.index == 1 %}
+                    <span class="badge bg-warning text-dark">🥇 1</span>
+                  {% elif loop.index == 2 %}
+                    <span class="badge bg-secondary">🥈 2</span>
+                  {% elif loop.index == 3 %}
+                    <span class="badge bg-danger">🥉 3</span>
+                  {% else %}
+                    {{ loop.index }}
+                  {% endif %}
+                </td>
+                <td>{{ laptop.marca }}</td>
+                <td>{{ laptop.modelo }}</td>
+                <td>{{ laptop.categoria }}</td>
+                <td class="text-center">
+                  <span class="badge bg-primary fs-6">{{ total_vendido }}</span>
+                </td>
+                <td class="text-end fw-bold text-success">
+                  {{ "%.2f"|format(total_ingresos) }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info m-3">
+          <i class="fa fa-info-circle"></i>
+          Aún no hay ventas registradas.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Gráficas -->
+<div class="row">
+  <!-- Barras horizontal: top laptops -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-dark text-white">
+        <i class="fa fa-bar-chart"></i> Unidades vendidas por laptop
+      </div>
+      <div class="card-body">
+        <canvas id="graficaTopBarras"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Línea: ingresos por mes -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-dark text-white">
+        <i class="fa fa-line-chart"></i> Ingresos totales por mes (Bs.)
+      </div>
+      <div class="card-body">
+        <canvas id="graficaLinea"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block tail_js %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  // Gráfica 1: barras horizontales - top laptops
+  const ctxBarras = document.getElementById('graficaTopBarras').getContext('2d');
+  new Chart(ctxBarras, {
+    type: 'bar',
+    data: {
+      labels: {{ labels_top | safe }},
+      datasets: [{
+        label: 'Unidades vendidas',
+        data: {{ valores_top | safe }},
+        backgroundColor: '#4e73df',
+        borderColor: '#2e59d9',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Top laptops por unidades vendidas'
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
+        }
+      }
+    }
+  });
+
+  // Gráfica 2: línea - ingresos por mes
+  const ctxLinea = document.getElementById('graficaLinea').getContext('2d');
+  new Chart(ctxLinea, {
+    type: 'line',
+    data: {
+      labels: {{ labels_mes | safe }},
+      datasets: [{
+        label: 'Ingresos (Bs.)',
+        data: {{ valores_mes | safe }},
+        fill: true,
+        backgroundColor: 'rgba(28, 200, 138, 0.15)',
+        borderColor: '#1cc88a',
+        pointBackgroundColor: '#1cc88a',
+        pointRadius: 5,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Ingresos mensuales'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return 'Bs. ' + context.parsed.y.toFixed(2);
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

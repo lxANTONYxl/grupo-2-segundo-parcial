@@ -42,7 +42,6 @@ def create_app() -> Flask:
             icon="fa-laptop", category="Catálogo"
         )
         
-        
         appbuilder.add_view(
             ClienteView, "Clientes",
             icon="fa-users", category="Ventas"
@@ -56,7 +55,6 @@ def create_app() -> Flask:
             icon="fa-list", category="Ventas"
         )
         
-        # ddsde aqui colocan sus menu de los reportes
         appbuilder.add_view(
             ReporteLaptopsView, "Laptops por Categoría",
             icon="fa-chart-bar", category="Reportes"

@@ -16,6 +16,5 @@ class CategoriaView(ModelView):
     edit_columns = ["nombre", "descripcion"]
     show_columns = ["nombre", "descripcion"]
 
-    # Solo Admin y Supervisor pueden agregar/editar/eliminar
     add_exclude_columns = []
     edit_exclude_columns = []

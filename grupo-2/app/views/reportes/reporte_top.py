@@ -10,17 +10,6 @@ class ReporteTopView(BaseView):
 
     @expose("/", methods=["GET"])
     def list(self):
-import json
-
-class ReporteTopView(BaseView):
-    """
-    Reporte 3 (Integrante 3 - Antony):
-    Muestra el ranking de laptops más vendidas (por cantidad)
-    y una gráfica de línea con los ingresos totales por mes.
-    """
-
-    @expose("/", methods=["GET"])
-    def list(self):
         # ── Top 10 laptops más vendidas ──────────────────────────────────────
         top_laptops = (
             db.session.query(
@@ -42,7 +31,7 @@ class ReporteTopView(BaseView):
         labels_top = [f"{row[0].marca} {row[0].modelo}" for row in top_laptops]
         valores_top = [int(row[1]) for row in top_laptops]
 
-        # ── Ingresos por mes (gráfica de línea) ─────────────────────────────
+        # ngresos por mes 
         ingresos_mes = (
             db.session.query(
                 db.func.date_format(Pedido.fecha, "%Y-%m").label("mes"),

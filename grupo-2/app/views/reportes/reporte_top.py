@@ -10,7 +10,6 @@ class ReporteTopView(BaseView):
 
     @expose("/", methods=["GET"])
     def list(self):
-        # ── Top 10 laptops más vendidas ──────────────────────────────────────
         top_laptops = (
             db.session.query(
                 Laptop,

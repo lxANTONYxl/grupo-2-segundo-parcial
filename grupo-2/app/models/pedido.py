@@ -10,7 +10,7 @@ class Pedido(db.Model):
     id = Column(Integer, primary_key=True)
     fecha = Column(Date, nullable=False, default=datetime.date.today)
     total = Column(Float, nullable=False, default=0.0)
-    estado = Column(String(50), nullable=False, default="Pendiente")  # Pendiente, Pagado, Cancelado
+    estado = Column(String(50), nullable=False, default="Pendiente")
 
 
     cliente_id = Column(Integer, ForeignKey("cliente.id"), nullable=False)

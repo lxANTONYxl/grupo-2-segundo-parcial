@@ -65,6 +65,10 @@ def create_app() -> Flask:
             icon="fa-chart-pie", category="Reportes"
         )
         
+        appbuilder.add_view(
+            ReporteTopView, "Top Laptops Vendidas",
+            icon="fa-chart-line", category="Reportes"
+        )
         _crear_roles(appbuilder)
         
     return app

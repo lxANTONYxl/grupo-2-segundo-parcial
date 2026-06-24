@@ -7,10 +7,10 @@ from app.models.laptop import Laptop
 
 class ReporteLaptopsView(BaseView):
 
-    @expose("/", methods=["GET", "POST"])
+    @expose("/", methods=["GET"])
     def list(self):
         categorias = db.session.query(Categoria).all()
-        cat_id_sel = request.form.get("cat_id", "")
+        cat_id_sel = request.args.get("cat_id", "")
 
         # datos para la grfica de barras cantidad por categtia
         datos_grafica = (

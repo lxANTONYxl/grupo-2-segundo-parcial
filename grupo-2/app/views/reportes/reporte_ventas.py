@@ -7,10 +7,10 @@ from app.models.pedido import Pedido
 
 class ReporteVentasView(BaseView):
 
-    @expose("/", methods=["GET", "POST"])
+    @expose("/", methods=["GET"])
     def list(self):
         clientes = db.session.query(Cliente).all()
-        cliente_id_sel = request.form.get("cliente_id", "")
+        cliente_id_sel = request.args.get("cliente_id", "")
 
         datos_grafica = (
             db.session.query(

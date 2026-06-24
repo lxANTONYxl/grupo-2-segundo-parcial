@@ -11,7 +11,6 @@ class DetallePedido(db.Model):
     precio_unitario = Column(Float, nullable=False)
     subtotal = Column(Float, nullable=False)
 
-    # Relaciones
     pedido_id = Column(Integer, ForeignKey("pedido.id"), nullable=False)
     laptop_id = Column(Integer, ForeignKey("laptop.id"), nullable=False)
 

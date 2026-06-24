@@ -2,12 +2,21 @@ from flask import Flask
 
 from .extensions import appbuilder, db
 
+from flask_wtf.csrf import CSRFProtect
+
+app = Flask(__name__)
+app.config.from_object("config")  # Asegúrate de cargar la config de la Solución 1
+
+# Inicializa la protección CSRF global
+csrf = CSRFProtect()
+
 
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object("config")
     
     db.init_app(app)
+    csrf.init_app(app)
     
     with app.app_context():
         appbuilder.init_app(app, db.session)
@@ -27,10 +36,15 @@ def create_app() -> Flask:
         from app.views.cliente_view import ClienteView
         from app.views.pedido_view import PedidoView
         from app.views.detalle_pedido_view import DetallePedidoView
+        from app.views.venta_view import VentaView
+        from app.views.dashboard_view import DashboardView
         from app.views.reportes.reporte_laptops import ReporteLaptopsView
         from app.views.reportes.reporte_ventas import ReporteVentasView
         from app.views.reportes.reporte_top import ReporteTopView
         
+        appbuilder.add_view(
+            DashboardView, "Dashboard", icon="fa-home", category=""
+        )
         appbuilder.add_view(
             CategoriaView, "Categorías", icon="fa-tags", category="Catálogo"
         )
@@ -41,6 +55,9 @@ def create_app() -> Flask:
             LaptopView, "Laptops", icon="fa-laptop", category="Catálogo"
         )
         
+        appbuilder.add_view(
+            VentaView, "Nueva Venta", icon="fa-cart-plus", category="Ventas"
+        )
         appbuilder.add_view(
             ClienteView, "Clientes", icon="fa-users", category="Ventas"
         )
@@ -100,11 +117,13 @@ PERMISOS_BASE = [
 
 PERMISOS_SUPERVISOR = PERMISOS_BASE + [
     # ── ACCESO VISUAL A MENÚS LATERALES ──────────────────────────────────────
+    ("menu_access", "Dashboard"),
     ("menu_access", "Catálogo"),
     ("menu_access", "Categorías"),
     ("menu_access", "Marcas"),
     ("menu_access", "Laptops"),
     ("menu_access", "Ventas"),
+    ("menu_access", "Nueva Venta"),
     ("menu_access", "Clientes"),
     ("menu_access", "Pedidos"),
     ("menu_access", "Detalle de Pedidos"),
@@ -129,6 +148,8 @@ PERMISOS_SUPERVISOR = PERMISOS_BASE + [
     ("can_edit", "LaptopView"),
     ("can_delete", "LaptopView"),
     # ── ACCIONES: Ventas completo ─────────────────────────────────────────────
+    ("can_list", "DashboardView"),
+    ("can_list", "VentaView"),
     ("can_list", "ClienteView"),
     ("can_show", "ClienteView"),
     ("can_add", "ClienteView"),
@@ -152,6 +173,7 @@ PERMISOS_SUPERVISOR = PERMISOS_BASE + [
 
 PERMISOS_USUARIO = PERMISOS_BASE + [
     # ── ACCESO VISUAL A MENÚS LATERALES ──────────────────────────────────────
+    ("menu_access", "Dashboard"),
     ("menu_access", "Catálogo"),
     ("menu_access", "Categorías"),
     ("menu_access", "Marcas"),
@@ -160,6 +182,8 @@ PERMISOS_USUARIO = PERMISOS_BASE + [
     ("menu_access", "Laptops por Categoría"),
     ("menu_access", "Ventas por Cliente"),
     ("menu_access", "Top Laptops Vendidas"),
+    # ── ACCIONES: Dashboard ──────────────────────────────────────────────────
+    ("can_list", "DashboardView"),
     # ── ACCIONES: Catálogo solo lectura ──────────────────────────────────────
     ("can_list", "CategoriaView"),
     ("can_show", "CategoriaView"),

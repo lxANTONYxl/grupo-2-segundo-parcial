@@ -10,10 +10,22 @@ class LaptopView(ModelView):
     add_title = "Agregar Laptop"
     edit_title = "Editar Laptop"
 
-    list_columns = ["marca", "modelo", "procesador", "ram_gb", "almacenamiento_gb", "precio", "stock", "categoria"]
-    add_columns = ["marca", "categoria", "modelo", "procesador", "ram_gb", "almacenamiento_gb", "precio", "stock", "descripcion"]
-    edit_columns = ["marca", "categoria", "modelo", "procesador", "ram_gb", "almacenamiento_gb", "precio", "stock", "descripcion"]
-    show_columns = ["marca", "categoria", "modelo", "procesador", "ram_gb", "almacenamiento_gb", "precio", "stock", "descripcion"]
+    list_columns = [
+        "marca", "modelo", "procesador", "ram_gb", "almacenamiento_gb",
+        "precio", "stock", "stock_minimo", "categoria",
+    ]
+    add_columns = [
+        "marca", "categoria", "modelo", "procesador", "ram_gb",
+        "almacenamiento_gb", "precio", "stock", "stock_minimo", "descripcion",
+    ]
+    edit_columns = [
+        "marca", "categoria", "modelo", "procesador", "ram_gb",
+        "almacenamiento_gb", "precio", "stock", "stock_minimo", "descripcion",
+    ]
+    show_columns = [
+        "marca", "categoria", "modelo", "procesador", "ram_gb",
+        "almacenamiento_gb", "precio", "stock", "stock_minimo", "descripcion",
+    ]
 
     label_columns = {
         "marca": "Marca",
@@ -24,6 +36,7 @@ class LaptopView(ModelView):
         "almacenamiento_gb": "Almacenamiento (GB)",
         "precio": "Precio (Bs.)",
         "stock": "Stock",
+        "stock_minimo": "Stock Mínimo",
         "descripcion": "Descripción",
     }
 

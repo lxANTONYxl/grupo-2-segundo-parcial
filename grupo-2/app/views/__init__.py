@@ -4,3 +4,5 @@ from .laptop_view import LaptopView
 from .cliente_view import ClienteView
 from .pedido_view import PedidoView
 from .detalle_pedido_view import DetallePedidoView
+from .venta_view import VentaView
+from .dashboard_view import DashboardView

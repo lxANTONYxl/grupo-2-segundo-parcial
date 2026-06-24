@@ -74,10 +74,12 @@
                 <td>{{ laptop.almacenamiento_gb }} GB</td>
                 <td class="text-end fw-bold">{{ "%.2f"|format(laptop.precio) }}</td>
                 <td>
-                  {% if laptop.stock > 0 %}
-                  <span class="badge bg-success">{{ laptop.stock }}</span>
-                  {% else %}
+                  {% if laptop.stock <= 0 %}
                   <span class="badge bg-danger">Sin stock</span>
+                  {% elif laptop.stock <= laptop.stock_minimo %}
+                  <span class="badge bg-warning text-dark">{{ laptop.stock }}</span>
+                  {% else %}
+                  <span class="badge bg-success">{{ laptop.stock }}</span>
                   {% endif %}
                 </td>
               </tr>

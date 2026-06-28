@@ -169,6 +169,10 @@ PERMISOS_SUPERVISOR = PERMISOS_BASE + [
     ("can_list", "ReporteLaptopsView"),
     ("can_list", "ReporteVentasView"),
     ("can_list", "ReporteTopView"),
+    # Pronósticos IA
+    ("can_pronostico", "ReporteLaptopsView"),
+    ("can_pronostico", "ReporteVentasView"),
+    ("can_pronostico", "ReporteTopView"),
 ]
 
 PERMISOS_USUARIO = PERMISOS_BASE + [
@@ -195,6 +199,10 @@ PERMISOS_USUARIO = PERMISOS_BASE + [
     ("can_list", "ReporteLaptopsView"),
     ("can_list", "ReporteVentasView"),
     ("can_list", "ReporteTopView"),
+    # Pronósticos IA
+    ("can_pronostico", "ReporteLaptopsView"),
+    ("can_pronostico", "ReporteVentasView"),
+    ("can_pronostico", "ReporteTopView"),
 ]
 
 

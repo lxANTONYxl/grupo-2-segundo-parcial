@@ -172,4 +172,65 @@
     }
   });
 </script>
+<!-- IA: Pronóstico con Gemini -->
+ <style>
+#pronosticoTexto h1, #pronosticoTexto h2, #pronosticoTexto h3 {
+  color: #4e73df;
+  margin-top: 1rem;
+}
+#pronosticoTexto strong {
+  color: #2e59d9;
+}
+#pronosticoTexto ul {
+  padding-left: 1.5rem;
+}
+#pronosticoTexto ul li {
+  margin-bottom: 0.4rem;
+}
+#pronosticoTexto ul li::marker {
+  color: #1cc88a;
+}
+</style>
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card shadow-sm border-primary">
+      <div class="card-header bg-primary text-white">
+        <i class="fa fa-robot"></i> Pronóstico con Inteligencia Artificial (Gemini)
+      </div>
+      <div class="card-body">
+        <button class="btn btn-outline-primary" id="btnPronostico" onclick="generarPronostico()">
+          <i class="fa fa-magic"></i> Generar pronóstico
+        </button>
+        <div id="pronosticoResultado" class="mt-3" style="display:none;">
+          <div id="pronosticoCargando" class="text-muted">
+            <i class="fa fa-spinner fa-spin"></i> Consultando IA...
+          </div>
+          <div id="pronosticoTexto" class="alert alert-info mt-2" style="display:none; white-space: pre-wrap;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+function generarPronostico() {
+  document.getElementById('pronosticoResultado').style.display = 'block';
+  document.getElementById('pronosticoCargando').style.display = 'block';
+  document.getElementById('pronosticoTexto').style.display = 'none';
+  document.getElementById('btnPronostico').disabled = true;
+
+  fetch('/reporteventasview/pronostico/')   <!-- ✅ AQUÍ va la URL -->
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('pronosticoCargando').style.display = 'none';
+      document.getElementById('pronosticoTexto').style.display = 'block';
+      document.getElementById('pronosticoTexto').innerHTML = marked.parse(data.pronostico);
+      document.getElementById('btnPronostico').disabled = false;
+    })
+    .catch(() => {
+      document.getElementById('pronosticoCargando').innerText = 'Error al conectar con la IA.';
+      document.getElementById('btnPronostico').disabled = false;
+    });
+}
+</script>
 {% endblock %}
